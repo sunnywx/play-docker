@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+  db:
+    image: mysql:8.0-debian
+    container_name: mysql-1
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: pass
+      MYSQL_ROOT_PASSWORD: pass
+    volumes:
+      - play-docker-mysql-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  php-app:
+    image: php:8.2.25-fpm-alpine
+    container_name: php-app
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 9000:9000
+    depends_on:
+      - db
+
+volumes:
+  play-docker-mysql-data:
