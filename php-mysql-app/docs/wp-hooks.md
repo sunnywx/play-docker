@@ -1,0 +1,6 @@
+wp hooks
+==
+
+## action
+
+## filter
