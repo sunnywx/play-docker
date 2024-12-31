@@ -1,6 +1,0 @@
-wp hooks
-==
-
-## action
-
-## filter
