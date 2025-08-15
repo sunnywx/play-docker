@@ -1,0 +1,13 @@
+FROM python:3.11-alpine
+
+# Install sqlite and useful Python packages
+RUN apk add --no-cache sqlite && \
+    pip install sqlite-utils pandas jupyter
+
+# Create directories
+RUN mkdir -p /data /scripts
+
+WORKDIR /scripts
+
+# Default command
+CMD ["python"]
