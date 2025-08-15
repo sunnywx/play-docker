@@ -1,0 +1,42 @@
+services:
+  # Simple SQLite CLI container
+  sqlite-cli:
+    image: alpine:latest
+    container_name: sqlite-cli
+    volumes:
+      - ./data:/data
+      - ./scripts:/scripts
+    working_dir: /data
+    command: sh -c "apk add --no-cache sqlite && tail -f /dev/null"
+    tty: true
+    stdin_open: true
+
+  # SQLite with web interface
+  sqlite-web:
+    build:
+      context: .
+      dockerfile: Dockerfile.sqlite-web
+    container_name: sqlite-web
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/data
+    working_dir: /data
+    command: sqlite_web --host 0.0.0.0 --port 8080 /data/example.db
+
+  # SQLite with Python for development
+  sqlite-python:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    container_name: sqlite-python
+    volumes:
+      - ./data:/data
+      - ./scripts:/scripts
+    working_dir: /scripts
+    command: tail -f /dev/null
+    tty: true
+    stdin_open: true
+
+volumes:
+  sqlite_data:
