@@ -2,14 +2,18 @@ services:
 
   mongo:
     image: mongo:8-noble
-    restart: always
+    container_name: play-mongo8
+    restart: on-failure
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27018:27017
 
   mongo-express:
-    image: mongo-express
-    restart: always
+    image: mongo-express:1.0.2-20-alpine3.19
+    container_name: play-mongo-ui
+    restart: no
     ports:
       - 8081:8081
     environment:
